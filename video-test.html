@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>اختبار فيديو واجهة لَبِنات</title><style>body{font-family:Tajawal,Tahoma,Arial,sans-serif;direction:rtl;margin:0;padding:36px 20px;background:#fdf6fa;color:#441555}.wrap{max-width:1000px;margin:auto}h1{font-size:32px}p{line-height:2}video{display:block;width:100%;max-height:570px;background:#311540;object-fit:contain;border-radius:18px;box-shadow:0 25px 60px #3b103f2d}.button{display:inline-block;border:0;border-radius:13px;background:#ac2d80;color:#fff;padding:12px 21px;margin:14px 0;cursor:pointer;font:inherit}code{direction:ltr;display:inline-block;padding:3px 8px;background:#f0e5ed;border-radius:5px}.alert{margin-top:20px;border:1px solid #e8c3dd;padding:14px 18px;border-radius:12px;background:#fff}#result{font-weight:700}</style></head>
+<body><main class="wrap"><p><a href="index.html">← العودة للرئيسية</a></p><h1>فحص فيديو خلفية الصفحة الرئيسية</h1>
+<p>هذه الصفحة تعرض الفيديو مباشرة بدون تدرجات الهيرو أو طبقات تعتيم. إذا اشتغل هنا ولم يظهر في الرئيسية، فالمشكلة في العرض أو إعدادات الهيرو.</p>
+<video id="testVideo" autoplay muted loop playsinline controls preload="auto" poster="assets/media/hero-poster.jpg"><source src="assets/media/hero-demo.mp4" type="video/mp4">متصفحك لا يدعم الفيديو.</video>
+<button class="button" id="play">▶ تشغيل الفيديو يدويًا</button>
+<div class="alert"><p>مسار ملف الفيديو: <code>assets/media/hero-demo.mp4</code></p><p>النتيجة: <span id="result">جارٍ التحقق...</span></p><p>للوصول إلى الكود: <code>assets/app.js</code> دالة <code>heroHome()</code>، و<code>assets/motion.js</code> لإيقاف وتشغيل الفيديو، و<code>assets/motion.css</code> للمظهر.</p></div></main>
+<script>
+const v=document.getElementById('testVideo'), result=document.getElementById('result');
+function update(){result.textContent=v.error?'تعذّر التحميل: '+(v.error.message||'خطأ غير معروف'):v.readyState>=2?('تم تحميل الفيديو، مدة المقطع '+v.duration.toFixed(1)+' ثانية، '+(v.paused?'متوقف':'يعمل الآن')):'بانتظار تحميل الفيديو';}
+for(const ev of ['loadedmetadata','playing','pause','error','waiting'])v.addEventListener(ev,update);
+document.getElementById('play').addEventListener('click',()=>v.play().then(update).catch(e=>{result.textContent='تعذّر التشغيل: '+e.message}));
+setTimeout(update,1000);
+</script></body></html>
